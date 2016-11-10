@@ -1,0 +1,27 @@
+{
+  "name": "tinyurl",
+  "version": "1.0.0",
+  "description": "Week 2 Project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node express_server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ak-11/Week-2-Project---Tiny-App.git"
+  },
+  "author": "Andrew Kim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ak-11/Week-2-Project---Tiny-App/issues"
+  },
+  "homepage": "https://github.com/ak-11/Week-2-Project---Tiny-App#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "i": "^0.3.5",
+    "lodash": "^4.16.6",
+    "npm": "^3.10.9"
+  }
+}
