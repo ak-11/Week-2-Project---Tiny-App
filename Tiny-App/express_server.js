@@ -4,11 +4,12 @@ const express = require("express");
 const app = express();
 const _ = require('lodash');
 const cookieParser = require ("cookie-parser");
-app.use(cookieParser())
 const PORT = process.env.PORT || 8080; // default port 8080
 app.set("view engine", "ejs")
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(cookieParser('super_secret_key'));
 
 const generateRandomString = function () {
   let text = "";
@@ -22,6 +23,11 @@ const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+
+const userID = generateRandomString();
+const userDatabase = {
+    "ZcA46g" : {id: "userRandomID", email: "andrew@example.com", password: "testing"}
+}
 
 app.get("/", (req, res) => {
   res.end("Hello!");
@@ -38,9 +44,27 @@ app.get("/urls", (req, res) => {
 
 app.post("/login", (req, res) =>  {
   console.log(req.body);
+  if (res.cookie())
   res.cookie("Username", req.body.username);
   res.redirect("/urls");
 });
+
+app.get("/register", (req, res) =>  {
+  res.render("urls_register");
+});
+
+app.post("/register", (req, res) =>  {
+  const password = req.body.password;
+  const email = req.body.email;
+  if (password === "" || email ==="")  {
+  res.status(400).send("You Forgot Something!");
+  }
+  const randomID = generateRandomString();
+  userDatabase[randomID] = {id: randomID, email: email, password: password};
+  console.log(res);
+  res.cookie("user_id", `${randomID}`)
+  res.redirect("/");
+})
 
 app.get("/urls/:id", (req, res) => {
   const templateVars = {
@@ -54,7 +78,7 @@ app.post("/urls/shortURL/delete", (req, res) =>  {
   const inputVal = req.body.shortURL;
   delete(urlDatabase[inputVal]);
   res.redirect("/urls")
-})
+});
 
 app.post("/urls/:shortID/delete", (req, res) =>  {
   const anotherVal = req.params.shortID;
@@ -78,9 +102,12 @@ app.post("/urls/create", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
-
+//redirect to the fullwebsite
 app.get("/u/:shortURL", (req, res) => {
   let longURL = urlDatabase[req.params.shortURL];
   res.redirect(longURL);
 });
 
+app.get('/profile', function(req, res){
+  res.render('profile', { username: req.user.username });
+});
