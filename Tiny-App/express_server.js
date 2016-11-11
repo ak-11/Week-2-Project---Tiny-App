@@ -2,7 +2,7 @@
 
 const express = require("express");
 const app = express();
-const _ = = require('lodash');
+const _ = require('lodash');
 const cookieParser = require ("cookie-parser");
 app.use(cookieParser())
 const PORT = process.env.PORT || 8080; // default port 8080
@@ -32,8 +32,14 @@ app.listen(PORT, () => {
 });
 
 app.get("/urls", (req, res) => {
-  const templateVars = { urls: urlDatabase };
+  const templateVars = { urls: urlDatabase, username: req.cookies["username"]};
   res.render("urls_index", templateVars);
+});
+
+app.post("/login", (req, res) =>  {
+  console.log(req.body);
+  res.cookie("Username", req.body.username);
+  res.redirect("/urls");
 });
 
 app.get("/urls/:id", (req, res) => {
@@ -52,7 +58,6 @@ app.post("/urls/shortURL/delete", (req, res) =>  {
 
 app.post("/urls/:shortID/delete", (req, res) =>  {
   const anotherVal = req.params.shortID;
-  console.log(anotherVal);
   delete(urlDatabase[anotherVal]);
   res.redirect("/urls");
 });
