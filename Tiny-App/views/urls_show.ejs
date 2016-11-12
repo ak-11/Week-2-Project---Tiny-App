@@ -5,8 +5,9 @@
 </head>
 <body>
   <% include ./partials/_headers %>
-  <h2 style="margin:100px"> Full URL: <%= fullURL %> </h2>
-  <h2 style="margin:100px"> Short URL: <%= shortURL %> </h2>
+  <br>
+  <h2><div style="margin-left:100px"> Full URL: <%= fullURL %> </div></h2>
+  <h2><div style="margin-left:100px"> Short URL: <%= shortURL %> </div></h2>
   <form action="/urls/<%= shortURL %>" method="POST" style="margin:100px" style="height:200px">
     <label for="addURL" style="margin-left:100px">Add New URL</label>
     <input id="newURL" type="text" name="newURL" placeholder="http://" style="width:1000px">

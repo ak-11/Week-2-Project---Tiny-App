@@ -33,6 +33,11 @@ app.get("/", (req, res) => {
   res.end("Hello!");
 });
 
+app.post("/logout", (req, res) => {
+  res.clearCookie("username")
+  res.redirect("/urls");
+})
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
@@ -44,13 +49,13 @@ app.get("/urls", (req, res) => {
 
 app.post("/login", (req, res) =>  {
   console.log(req.body);
-  if (res.cookie())
-  res.cookie("Username", req.body.username);
+  if (res.cookie());
+  res.cookie("username", req.body.username);
   res.redirect("/urls");
 });
 
 app.get("/register", (req, res) =>  {
-  res.render("urls_register");
+  res.render("urls_register", {username: ""});
 });
 
 app.post("/register", (req, res) =>  {
@@ -69,7 +74,8 @@ app.post("/register", (req, res) =>  {
 app.get("/urls/:id", (req, res) => {
   const templateVars = {
     shortURL: req.params.id,
-    fullURL: urlDatabase[req.params.id]
+    fullURL: urlDatabase[req.params.id],
+    username: req.cookies["username"]
   };
   res.render("urls_show", templateVars);
 });
@@ -93,7 +99,8 @@ app.post("/urls/:id", (req, res)  =>  {
 })
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  const templateVars = {username: req.cookies["username"]};
+  res.render("urls_new", templateVars);
 });
 
 app.post("/urls/create", (req, res) => {

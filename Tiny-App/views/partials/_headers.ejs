@@ -1,12 +1,16 @@
-<header style="margin-left: 100PX"><body background="http://images.huffingtonpost.com/2015-11-27-1448621966-2272308-PunnyandFunnyNamesforCats.jpg">
-<h1>Welcome To Andrew's Super Awesome Tiny URL Maker&#8482;</h1></body></header>
-<
-<p><a href="/register" style="margin:10px;"> REGISTER</a></p>
-<p>
-  <form action="/login" method="POST" style="margin:10px;">
-    <label for="login">LOGIN</label>
-    <input id="login" type="text" name="username" placeholder="Your Username Here..." style="width: 300px">
+<header style="margin-left: 100PX"><body background="http://images.huffingtonpost.com/2015-11-27-1448621966-2272308-PunnyandFunnyNamesforCats.jpg" style="background-size:cover">
+<h1 align="center">Welcome To Andrew's Super Awesome Tiny URL Maker&#8482;</h1></body></header>
+<%= username %>
+<% if (username) { %>
+  <div><form action="/logout" method="POST">
+      <input type="submit" value="LOGOUT"></div>
+<% } else { %>
+  <div form action="/login" method="POST" align="center">
+    <label for="login" align="center">LOGIN</label>
+    <input id="login" type="text" name="username" placeholder="Your Username Here..." style="width:500px" align="center">
     <input type="submit" value="Login">
-  </form>
-</p>
+  </form></div>
+  <br>
+  <div><a href="/register" align="left">REGISTER</a></</div>
+<% } %>
 <br>
