@@ -18,7 +18,8 @@
         <td><%= urls[shortURL] %></td>
         <td>5<%= shortURL %></td>
         <td>
-          <a href="http://localhost:8080/urls/<%= shortURL %>">Edit</a>
+          <form action="http://localhost:8080/urls/<%= shortURL %>" method="POST">
+                            <input type="submit" value="EDIT"></form>
         </td>
         <td>
           <form action="/urls/<%= shortURL %>/delete" method="POST">
@@ -33,8 +34,6 @@
   <input type="submit" value="Submit">
   </form>
 
-  <% if (email) { %>
-  <div><h3><i><a href="http://localhost:8080/urls/new"><b>Create a New Short Link</b></a></i></h3></div>
-  <% } %>
 </body>
 </html>
+
