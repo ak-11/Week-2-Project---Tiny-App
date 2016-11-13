@@ -2,14 +2,14 @@
 
 const express = require("express");
 const app = express();
-const _ = require('lodash');
+const bcrypt = require("bcrypt-nodejs");
 const cookieParser = require ("cookie-parser");
 const PORT = process.env.PORT || 8080; // default port 8080
 app.set("view engine", "ejs")
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(cookieParser('super_secret_key'));
+app.use(cookieParser("super_secret_key"));
 
 const generateRandomString = function () {
   let text = "";
@@ -43,7 +43,7 @@ const checkIfEmailExists = function (email) {
 const checkIfPasswordCorrect = function (email, password) {
   let isPasswordCorrect = false;
   for (let id in userDatabase) {
-    if (userDatabase[id].email === email && userDatabase[id].password === password) {
+    if (userDatabase[id].email === email && bcrypt.compareSync(password, userDatabase[id].password) === true) {
       isPasswordCorrect = true;
     }
   }
@@ -152,7 +152,7 @@ app.get("/register", (req, res) =>  {
 });
 
 app.post("/register", (req, res) =>  {
-  const password = req.body.password;
+  const password = bcrypt.hashSync(req.body.password);
   const email = req.body.email;
   if (password === "" || email === "")  {
     res.status(403).send("You Forgot Something!");
@@ -162,6 +162,7 @@ app.post("/register", (req, res) =>  {
   const randomID = generateRandomString();
   userDatabase[randomID] = { id: randomID, email: email, password: password, urls: {} };
   res.cookie("user_id", `${randomID}`)
+  console.log(email, password, randomID);
   res.redirect("/urls");
 })
 

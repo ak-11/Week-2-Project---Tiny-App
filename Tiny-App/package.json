@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/ak-11/Week-2-Project---Tiny-App#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.2",
