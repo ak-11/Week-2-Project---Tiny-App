@@ -25,14 +25,12 @@
                             <input type="submit" value="DELETE"></form>
         </td>
       </tr>
-      <% } %>
-  </table>
-  <form action="/urls/shortURL/delete" method="POST" style="margin:100px">
-  <label for="shortURL"> Delete Short URL: </label>
-  <input id="shortURL" type="text" name="shortURL" placeholder="http://" style="width: 300px">
-  <input type="submit" value="Submit">
-  </form>
-
+      <% }; %>
+      <% if (Object.keys(urls).length === 0) { %>
+      <tr>
+        <td colspan="4">You Have No URL's</td>
+      </tr>
+        <% } %>
   <% if (email) { %>
   <div><h3><i><a href="http://localhost:8080/urls/new"><b>Create a New Short Link</b></a></i></h3></div>
   <% } %>
